@@ -1,7 +1,7 @@
 module.exports = {
-  "username": "USERNAME",
-  "password": "PASSWORD",
+  "username": "shop",
+  "password": "shop1",
   "ilpKitHost": "ilp-kit.michielbdejong.com",
-  "httpsKeyFileName": "/etc/letsencrypt/live/ilp-kit.michielbdejong.com/privkey.pem",
-  "httpsCertFileName": "/etc/letsencrypt/live/ilp-kit.michielbdejong.com/cert.pem"
+  "httpsKeyFileName": "/home/michiel/privkey.pem",
+  "httpsCertFileName": "/home/michiel/cert.pem"
 }
