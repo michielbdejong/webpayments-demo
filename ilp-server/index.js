@@ -1,7 +1,7 @@
 'use strict'
 
-const STATICS_FOLDER = '../payment-apps/spsp-demo/'
-const STATIC_FILES = [ 'index.html', 'app.js', 'app.html' ]
+const STATICS_FOLDER = '../payment-apps/spsp-demo'
+const STATIC_FILES = [ '/index.html', '/app.js', '/app.html' ]
 
 const fs = require('fs')
 const https = require('https')
@@ -18,9 +18,10 @@ const receiver = ILP.createReceiver({
 receiver.listen()
 
 function serveFile(res, fileName) {
-  if STATIC_FILES.indexOf(fileName) == -1) {
+  if (STATIC_FILES.indexOf(fileName) == -1) {
+    console.log('Path not allowed', fileName)
     res.writeHead(404)
-    red.end()
+    res.end()
   } else {
     fs.readFile(STATICS_FOLDER + fileName, function(err,data){
       res.end(data)
@@ -35,7 +36,7 @@ const server = https.createServer({
   if (req.url.substring(0, URL_PATH_FOR_IPR.length) === URL_PATH_FOR_IPR) {
     let amount
     try {
-      amount = parseFloat(req.url.substring(1))
+      amount = parseFloat(req.url.substring(URL_PATH_FOR_IPR.length))
       if (isNaN(amount)) {
         amount = 1
         throw new Error('Not a number')
@@ -46,7 +47,9 @@ const server = https.createServer({
     const paymentRequest = receiver.createRequest({
       amount: amount
     })
-    res.writeHead(200);
+    res.writeHead(200, {
+      'Access-Control-Allow-Origin', '*'
+    });
     res.write(JSON.stringify(paymentRequest))
     res.end()
   } else if (req.url === '/') {
