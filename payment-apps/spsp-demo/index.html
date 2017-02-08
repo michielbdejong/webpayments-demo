@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Install TommyPay</title>
+        <title>Install MichielPay</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
     <body>
-        <h2>Install TommyPay</h2>
+        <h2>Install MichielPay</h2>
         <p><i>A very primitive payment app that shows the entire payment request passed
             to it as JSON.</i></p>
 
@@ -21,21 +21,21 @@
                 navigator.serviceWorker.register("./app.js")
                 .then(function(registration) {
                     console.log("registering");
-                    paymentView.textContent += "Registering TommyPay\n";
+                    paymentView.textContent += "Registering MichielPay\n";
                     return registration.paymentAppManager.setManifest({
-                        name: "TommyPay",
-                        label: "TommyPay",
+                        name: "MichielPay",
+                        label: "MichielPay",
                         options: [
                         {
-                            name: "Pay with new TommyPay account",
-                            label: "Pay with new TommyPay account",
+                            name: "Pay with new MichielPay account",
+                            label: "Pay with new MichielPay account",
                             id: "new",
                             enabledMethods: [ "https://tommypay.no/pay" ]
                         }]
                     });
                 }).then(function() {
                     console.log("registered");
-                    paymentView.textContent += "TommyPay successfully registered\n";
+                    paymentView.textContent += "MichielPay successfully registered\n";
                 }).catch(function(error) {
                     paymentView.textContent += error + "\n";
                 });
