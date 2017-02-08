@@ -3,5 +3,7 @@ module.exports =
   "password": "PASSWORD",
   "ilpKitHost": "ilp-kit.michielbdejong.com",
   "httpsKeyFileName": "/path/to/privkey.pem",
-  "httpsCertFileName": "/path/to/cert.pem"
+  "httpsCertFileName": "/path/to/cert.pem",
+  "staticsFolder": "../payment-apps/spsp-demo/",
+  "
 }
