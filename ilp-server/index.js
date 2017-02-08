@@ -18,8 +18,18 @@ const server = https.createServer({
   key: fs.readFileSync(config.httpsKeyFileName),
   cert: fs.readFileSync(config.httpsCertFileName)
 }, function(req, res) {
+  let amount
+  try {
+    amount = parseFloat(req.url.substring(1))
+    if (isNaN(amount)) {
+      amount = 1
+      throw new Error('Not a number')
+    }
+  } catch (e) {
+    console.log('Unparseable amount in URL', req.url);
+  }
   const paymentRequest = receiver.createRequest({
-    amount: 10
+    amount: amount
   })
   res.writeHead(200);
   res.write(JSON.stringify(paymentRequest))
