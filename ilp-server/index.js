@@ -1,7 +1,15 @@
 'use strict'
 
-const STATICS_FOLDER = '../payment-apps/spsp-demo'
-const STATIC_FILES = [ '/index.html', '/app.js', '/app.html' ]
+const STATICS_FOLDER = '../merchants/clothing'
+const STATIC_FILES = [
+  '/hat.png',
+  '/index.html',
+  '/inventory.js',
+  '/receipt.html',
+  '/style.css',
+  '/t-shirt.png',
+  '/wallet.png'
+]
 
 const fs = require('fs')
 const https = require('https')
@@ -48,7 +56,8 @@ const server = https.createServer({
       amount: amount
     })
     res.writeHead(200, {
-      'Access-Control-Allow-Origin', '*'
+      'Access-Control-Allow-Origin': '*',
+      'Access-Control-Allow-Headers': ''
     });
     res.write(JSON.stringify(paymentRequest))
     res.end()
