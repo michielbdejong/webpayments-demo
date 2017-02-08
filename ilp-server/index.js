@@ -14,7 +14,7 @@ const receiver = ILP.createReceiver({
 })
 receiver.listen()
 
-https.createServer({
+const server = https.createServer({
   key: fs.readFileSync(config.httpsKeyFileName),
   cert: fs.readFileSync(config.httpsCertFileName)
 }, function(req, res) {
@@ -30,3 +30,5 @@ https.createServer({
 receiver.on('incoming', (transfer, fulfillment) => {
   console.log('Got paid ' + paymentRequest.destinationAmount + ' for ' + paymentRequest.destinationMemo.thisIsFor)
 })
+server.listen(10000)
+console.log('Listening on port 10000')
