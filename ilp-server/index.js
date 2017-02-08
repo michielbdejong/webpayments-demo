@@ -64,7 +64,7 @@ const server = https.createServer({
   } else if (req.url === '/') {
     serveFile(res, '/index.html')
   } else {
-    serveFile(res, req.url)
+    serveFile(res, req.url.split('?')[0])
   }
 })
 
