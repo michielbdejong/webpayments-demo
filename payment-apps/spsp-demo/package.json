@@ -1,0 +1,16 @@
+{
+  "name": "ilp-server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "dependencies": {
+    "ilp": "^8.0.1",
+    "ilp-plugin-bells": "^10.2.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}

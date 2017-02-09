@@ -28,7 +28,7 @@
                     xhr.responseType = 'json';
                     xhr.send(JSON.stringify({
                       username: document.getElementById('username').value,
-                      password: 'password',
+                      password: document.getElementById('password').value,
                       ipr: event.data.methodData[0].data,
                     }));
                     xhr.onload = function() {
@@ -36,9 +36,9 @@
                     
                       console.log("Page passing response back to SW");
                       event.source.postMessage({
-                          methodName: "https://tommypay.no/pay",
+                          methodName: "https://interledger.org/webpayments/spsp",
                           details: {
-                              test: "test"
+                              result: xhr.response
                           }
                       });
                       window.close();
