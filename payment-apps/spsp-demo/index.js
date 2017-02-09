@@ -60,9 +60,10 @@ const server = https.createServer({
       try {
         var data = JSON.parse(body);
         console.log('paying', data);
-        pay(data).then(function() {
+        pay(data).then(function(fulfillment) {
+          console.log('paid', data, fulfillment);
           res.writeHead(200);
-          res.end(JSON.stringify({ body }));
+          res.end(JSON.stringify({ fulfillment });
         });
        } catch(e) {
         res.writeHead(500);

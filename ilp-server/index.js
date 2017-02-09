@@ -53,7 +53,8 @@ const server = https.createServer({
       console.log('Unparseable amount in URL', req.url);
     }
     const paymentRequest = receiver.createRequest({
-      amount: amount
+      amount: amount,
+      expiresAt: '3017-02-09T14:13:36.974Z',
     })
     res.writeHead(200, {
       'Access-Control-Allow-Origin': '*',
