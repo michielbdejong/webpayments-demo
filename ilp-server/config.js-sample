@@ -1,0 +1,7 @@
+module.exports = 
+  "username": "USERNAME",
+  "password": "PASSWORD",
+  "ilpKitHost": "ilp-kit.michielbdejong.com",
+  "httpsKeyFileName": "/path/to/privkey.pem",
+  "httpsCertFileName": "/path/to/fullchain.pem"
+}
