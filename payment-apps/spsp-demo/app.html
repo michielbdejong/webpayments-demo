@@ -36,9 +36,9 @@
                     
                       console.log("Page passing response back to SW");
                       event.source.postMessage({
-                          methodName: "https://tommypay.no/pay",
+                          methodName: "https://interledger.org/webpayments/spsp",
                           details: {
-                              test: "test"
+                              xhr.response
                           }
                       });
                       window.close();

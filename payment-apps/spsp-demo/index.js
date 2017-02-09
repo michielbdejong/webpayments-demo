@@ -10,6 +10,23 @@ const STATIC_FILES = [
 const fs = require('fs')
 const https = require('https')
 const config = require('../../ilp-server/config')
+const ILP = require('ilp')
+const FiveBellsLedgerPlugin = require('ilp-plugin-bells')
+
+function pay(data) {
+  const sender = ILP.createSender({
+    _plugin: FiveBellsLedgerPlugin,
+    prefix: 'lu.eur.michiel.',
+    account: 'https://ilp-kit.michielbdejong.com/ledger/accounts/' + data.username,
+    password: data.password,
+    connectors: ['connector']
+  })
+  
+  return sender.quoteRequest(data.ipr)
+    .then((paymentParams) => {
+      return sender.payRequest(paymentParams)
+    })
+}
 
 function serveFile(res, fileName) {
   if (STATIC_FILES.indexOf(fileName) == -1) {
@@ -40,8 +57,17 @@ const server = https.createServer({
     });
     req.on('end', function() {
       console.log({body});
-      res.writeHead(200);
-      res.end(JSON.stringify({ body: body }));
+      try {
+        var data = JSON.parse(body);
+        console.log('paying', data);
+        pay(data).then(function() {
+          res.writeHead(200);
+          res.end(JSON.stringify({ body }));
+        });
+       } catch(e) {
+        res.writeHead(500);
+        res.end(JSON.stringify({ body, err }));
+      }
     });
   } else if (req.url === '/') {
     serveFile(res, '/index.html')
