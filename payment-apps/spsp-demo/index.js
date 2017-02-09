@@ -31,7 +31,19 @@ const server = https.createServer({
   key: fs.readFileSync(config.httpsKeyFileName),
   cert: fs.readFileSync(config.httpsCertFileName)
 }, function(req, res) {
-  if (req.url === '/') {
+  console.log(req.url);
+  if (req.url === '/pay') {
+    console.log('Pay!');
+    var body = '';
+    req.on('data', function(chunk) {
+      body += chunk;
+    });
+    req.on('end', function() {
+      console.log({body});
+      res.writeHead(200);
+      res.end(JSON.stringify({ body: body }));
+    });
+  } else if (req.url === '/') {
     serveFile(res, '/index.html')
   } else {
     serveFile(res, req.url.split('?')[0])

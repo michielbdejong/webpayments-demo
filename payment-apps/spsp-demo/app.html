@@ -11,6 +11,8 @@
 
         <pre id="paymentView"></pre>
 
+        <input id="username">
+        <input id="password" type="password">
         <button id="paymentButton">Pay</button>
 
         <script>
@@ -21,14 +23,26 @@
                 console.log("Page got message from SW");
                 paymentView.textContent = JSON.stringify(event.data, null, '  ');
                 paymentButton.onclick = function() {
-                    console.log("Page passing response back to SW");
-                    event.source.postMessage({
-                        methodName: "https://tommypay.no/pay",
-                        details: {
-                            test: "test"
-                        }
-                    });
-                    window.close();
+                    var xhr = new XMLHttpRequest();
+                    xhr.open('POST', 'https://ilp-kit.michielbdejong.com:20000/pay', true);
+                    xhr.responseType = 'json';
+                    xhr.send(JSON.stringify({
+                      username: document.getElementById('username').value,
+                      password: 'password',
+                      ipr: event.data.methodData[0].data,
+                    }));
+                    xhr.onload = function() {
+                      console.log(xhr.status, xhr.response);
+                    
+                      console.log("Page passing response back to SW");
+                      event.source.postMessage({
+                          methodName: "https://tommypay.no/pay",
+                          details: {
+                              test: "test"
+                          }
+                      });
+                      window.close();
+                    };
                 }
             });
         </script>
