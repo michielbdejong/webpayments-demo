@@ -28,7 +28,7 @@
                     xhr.responseType = 'json';
                     xhr.send(JSON.stringify({
                       username: document.getElementById('username').value,
-                      password: 'password',
+                      password: document.getElementById('password').value,
                       ipr: event.data.methodData[0].data,
                     }));
                     xhr.onload = function() {
@@ -38,7 +38,7 @@
                       event.source.postMessage({
                           methodName: "https://interledger.org/webpayments/spsp",
                           details: {
-                              xhr.response
+                              result: xhr.response
                           }
                       });
                       window.close();
