@@ -15,9 +15,9 @@ function buy(key, ipr) {
                 "basic-card", "mastercard", "visa",
                 "https://tommypay.no/pay",
                 "https://americanexpress.com/express-checkout",
-                "https://rsolomakhin.github.io/bobpay",
                 "https://interledger.org/webpayments/spsp"
             ],
+            data: ipr
         }
     ]
     var details = {
@@ -36,27 +36,6 @@ function buy(key, ipr) {
                 id: "regular",
                 label: "Regular snail-mail shipping",
                 amount: { currency: "USD", value: "2.00" }
-            },
-            {
-                id: "express",
-                label: "Express shipping",
-                amount: { currency: "USD", value: "5.00" }
-            }
-        ],
-        modifiers: [
-            {
-                supportedMethods: [ "https://interledger.org/webpayments/spsp" ],
-                total: {
-                    label: "Total (with ILP discount)",
-                    amount: { currency: "USD", value: item.price - 1 }
-                },
-                additionalDisplayItems: [
-                    {
-                        label: "ILP discount",
-                        amount: { currency: "USD", value: "-1" }
-                    }
-                ],
-                data: ipr
             }
         ]
     }
@@ -65,7 +44,7 @@ function buy(key, ipr) {
         requestPayerName: true,
         requestPayerEmail: true,
         requestPayerPhone: true,
-        requestShipping: true
+        requestShipping: false
     }
 
     try {
