@@ -19,30 +19,45 @@
             var paymentView = document.getElementById("paymentView");
             var paymentButton = document.getElementById("paymentButton");
 
+            function xhr(method, url, payload) {
+                return new Promise(function(resolve, reject) {
+                    var xhr = new XMLHttpRequest();
+                    xhr.open(method, url, true);
+                    xhr.responseType = 'json';
+                    xhr.onload = function() {
+                        console.log(xhr.status, xhr.response);
+                        // TODO: reject if this fails
+                        resolve(xhr.response);
+                    };
+                    if (method === 'GET') {
+                        xhr.send();
+                    } else {
+                        xhr.send(JSON.stringify(payload));
+                    }
+                });
+            }
+
             navigator.serviceWorker.addEventListener('message', function(event) {
                 console.log("Page got message from SW");
                 paymentView.textContent = JSON.stringify(event.data, null, '  ');
                 paymentButton.onclick = function() {
-                    var xhr = new XMLHttpRequest();
-                    xhr.open('POST', 'https://ilp-kit.michielbdejong.com:20000/pay', true);
-                    xhr.responseType = 'json';
-                    xhr.send(JSON.stringify({
-                      username: document.getElementById('username').value,
-                      password: document.getElementById('password').value,
-                      ipr: event.data.methodData[0].data,
-                    }));
-                    xhr.onload = function() {
-                      console.log(xhr.status, xhr.response);
+                    xhr('GET', event.data.methodData[0].data.ipr).then(function(ipr) {
+                        return xhr('POST', 'https://ilp-kit.michielbdejong.com:20000/pay', {
+                          username: document.getElementById('username').value,
+                          password: document.getElementById('password').value,
+                          ipr: event.data.methodData[0].data,
+                        });
+                    }).then(function(response) {
+                        console.log("Page passing response back to SW");
+                        event.source.postMessage({
+                            methodName: "https://interledger.org/webpayments/spsp",
+                            details: {
+                                result: response
+                            }
+                        });
+                        window.close();
+                    });
                     
-                      console.log("Page passing response back to SW");
-                      event.source.postMessage({
-                          methodName: "https://interledger.org/webpayments/spsp",
-                          details: {
-                              result: xhr.response
-                          }
-                      });
-                      window.close();
-                    };
                 }
             });
         </script>

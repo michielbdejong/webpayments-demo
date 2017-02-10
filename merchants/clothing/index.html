@@ -7,7 +7,7 @@
         <link rel="stylesheet" href="style.css"/>
         <script src="inventory.js"></script>
         <script>
-function buy(key, ipr) {
+function buy(key) {
     var item = items[key];
     var methodData = [
         {
@@ -17,7 +17,9 @@ function buy(key, ipr) {
                 "https://americanexpress.com/express-checkout",
                 "https://interledger.org/webpayments/spsp"
             ],
-            data: ipr
+            data: {
+              ipr: 'https://ilp-kit.michielbdejong.com:10000/ipr/' + item.price
+            }
         }
     ]
     var details = {
@@ -84,17 +86,6 @@ function buy(key, ipr) {
     } catch(error) {
         window.alert(error);
     }
-}
-function getIPR(key) {
-    var amount = items[key].price;
-    var SHOP_ACCOUNT = 'https://ilp-kit.michielbdejong.com:10000/ipr/';
-    var xhr = new XMLHttpRequest();
-    xhr.open('GET', SHOP_ACCOUNT + amount, true);
-    xhr.responseType = 'json';
-    xhr.onload = function(e) {
-      buy(key, xhr.response);
-    };
-    xhr.send();
 }
 
         </script>
