@@ -1,13 +1,12 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Install MichielPay</title>
+        <title>Install InterledgerForTheWeb</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
     <body>
-        <h2>Install MichielPay</h2>
-        <p><i>A very primitive payment app that shows the entire payment request passed
-            to it as JSON.</i></p>
+        <h2>Install InterledgerForTheWeb</h2>
+        <p><i>A very primitive payment app, based almost entirely on Tommy Thorsen's excellent exploratory work.</i></p>
 
         <pre id="paymentView"></pre>
 
@@ -21,21 +20,21 @@
                 navigator.serviceWorker.register("./app.js")
                 .then(function(registration) {
                     console.log("registering");
-                    paymentView.textContent += "Registering MichielPay\n";
+                    paymentView.textContent += "Registering InterledgerForTheWeb\n";
                     return registration.paymentAppManager.setManifest({
-                        name: "MichielPay",
-                        label: "MichielPay",
+                        name: "InterledgerForTheWeb",
+                        label: "InterledgerForTheWeb",
                         options: [
                         {
-                            name: "Pay with new MichielPay account",
-                            label: "Pay with new MichielPay account",
+                            name: "Pay with new InterledgerForTheWeb account",
+                            label: "Pay with new InterledgerForTheWeb account",
                             id: "new",
-                            enabledMethods: [ "https://tommypay.no/pay" ]
+                            enabledMethods: [ "https://interledger.org/pay" ]
                         }]
                     });
                 }).then(function() {
                     console.log("registered");
-                    paymentView.textContent += "MichielPay successfully registered\n";
+                    paymentView.textContent += "InterledgerForTheWeb successfully registered\n";
                 }).catch(function(error) {
                     paymentView.textContent += error + "\n";
                 });

@@ -1,11 +1,11 @@
 <!DOCTYPE html>
 <html>
     <head>
-        <title>Pay with MichielPay</title>
+        <title>Pay with InterledgerForTheWeb</title>
         <meta name="viewport" content="width=device-width, initial-scale=1" />
     </head>
     <body>
-        <h2>Pay with MichielPay!</h2>
+        <h2>Pay with InterledgerForTheWeb!</h2>
         <p><i>A very primitive payment app that shows the entire payment request passed
             to it as JSON.</i></p>
 
@@ -23,7 +23,7 @@
                 paymentButton.onclick = function() {
                     console.log("Page passing response back to SW");
                     event.source.postMessage({
-                        methodName: "https://tommypay.no/pay",
+                        methodName: "https://interledger.org/pay",
                         details: {
                             test: "test"
                         }
