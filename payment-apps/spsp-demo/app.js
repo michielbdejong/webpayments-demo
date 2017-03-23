@@ -22,7 +22,7 @@ self.addEventListener('paymentrequest', function(event) {
             }
         });
         clients.openWindow("app.html").then(function(windowClient) {
-            console.log("window opened!");
+            console.log("window opened!", event.data);
             windowClient.postMessage(event.data);
         })
         .catch(function(error) {

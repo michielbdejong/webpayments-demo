@@ -17,13 +17,6 @@ const ILP = require('ilp')
 const FiveBellsLedgerPlugin = require('ilp-plugin-bells')
 const config = require('./config')
 
-const receiver = ILP.createReceiver({
-  _plugin: FiveBellsLedgerPlugin,
-  prefix: '',
-  account: `https://${config.ilpKitHost}/ledger/accounts/${config.username}`,
-  password: config.password
-})
-receiver.listen()
 
 function serveFile(res, fileName) {
   if (STATIC_FILES.indexOf(fileName) == -1) {
@@ -69,8 +62,19 @@ const server = https.createServer({
 })
 
 // This automatically checks the incoming transfer and fulfills the condition
-receiver.on('incoming', (transfer, fulfillment) => {
-  console.log('Got paid ' + paymentRequest.destinationAmount + ' for ' + paymentRequest.destinationMemo.thisIsFor)
+console.log('creating receiver', config.username, config.password, config.ilpKitHost);
+const receiver = ILP.createReceiver({
+  _plugin: FiveBellsLedgerPlugin,
+  prefix: '',
+  account: `https://${config.ilpKitHost}/ledger/accounts/${config.username}`,
+  password: config.password
 })
-server.listen(10000)
-console.log('Listening on port 10000')
+console.log('receiver created')
+receiver.listen().then(() => {
+  console.log('receiver is listening!');
+  receiver.on('incoming', (transfer, fulfillment) => {
+    console.log('Got paid ' + paymentRequest.destinationAmount + ' for ' + paymentRequest.destinationMemo.thisIsFor)
+  })
+  server.listen(10000)
+  console.log('Listening on port 10000')
+});

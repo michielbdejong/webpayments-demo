@@ -19,7 +19,11 @@
 
             navigator.serviceWorker.addEventListener('message', function(event) {
                 console.log("Page got message from SW");
-                paymentView.textContent = JSON.stringify(event.data, null, '  ');
+                var packet = event.data;
+                try {
+                  packet = packet.methodData[0].data;
+                } catch(e) {}
+                paymentView.textContent = JSON.stringify(packet, null, '  ');
                 paymentButton.onclick = function() {
                     console.log("Page passing response back to SW");
                     event.source.postMessage({

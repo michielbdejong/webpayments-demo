@@ -49,6 +49,7 @@ function buy(key, ipr) {
 
     try {
         var request = new PaymentRequest(methodData, details, options);
+        console.log('PaymentRequest', methodData, details, options);
         request.addEventListener("shippingaddresschange", function(evt) {
             console.log("shipping address changed");
             console.log(JSON.stringify(evt));
@@ -92,6 +93,7 @@ function getIPR(key) {
     xhr.open('GET', SHOP_ACCOUNT + amount, true);
     xhr.responseType = 'json';
     xhr.onload = function(e) {
+      console.log('got IPR', key, xhr.response);
       buy(key, xhr.response);
     };
     xhr.send();
