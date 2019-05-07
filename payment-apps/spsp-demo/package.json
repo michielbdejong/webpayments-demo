@@ -4,8 +4,8 @@
   "description": "",
   "main": "index.js",
   "dependencies": {
-    "ilp": "^8.0.1",
-    "ilp-plugin-bells": "^10.2.3"
+    "ilp": "^14.1.0",
+    "ilp-plugin-bells": "^15.1.2"
   },
   "devDependencies": {},
   "scripts": {
